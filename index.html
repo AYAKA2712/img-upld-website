@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparrow link</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", serif;
+}
+
+body {
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+#login-form {
+    background-color: rgb(162, 208, 244);
+    border-radius: 15px;
+    text-align: center;
+    padding: 50px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1 1 300px; /* Allow the form to grow and shrink */
+    min-width: 280px;
+    display: flex;
+    flex-direction: column; /* Align inputs and button vertically */
+    align-items: center;
+}
+
+#login-form h2,
+p {
+    text-align: center;
+    margin: 10px;
+}
+
+#login-form input {
+    width: 100%;
+    max-width: 270px;
+    height: 40px;
+    margin: 15px 0;
+    padding-left: 10px;
+    border-radius: 8px;
+    border: 2px solid rgb(232, 230, 230);
+    text-align: left;
+}
+
+#login-form button {
+    width: 100%;
+    max-width: 270px;
+    height: 40px;
+    border-radius: 12px;
+    border-width: 0;
+    background-color: rgb(11, 5, 160);
+    color: white;
+    font-weight: bold;
+}
+
+#login-form button:hover {
+    background-color: rgb(48, 141, 66);
+}
+
+.suggestion-line {
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 50px;
+}
+
+.suggestion-line span,
+a {
+    text-align: right;
+    font-size: 10px;
+    padding-left: 5px;
+    text-decoration: none;
+}
+
+.suggestion-line a {
+    color: black;
+    font-weight: bold;
+}
+
+.form-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#alert-red,
+#alert-green {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    height: 60px;
+    margin: 9px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#alert-red {
+    background-color: rgb(241, 93, 93);
+}
+
+#alert-red p,
+#alert-green p {
+    color: white;
+    font-size: 12px;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Tablet and Mobile devices (783px or less) */
+@media (max-width: 783px) {
+    #login-form {
+        padding: 30px;
+        width: 90%;
+        min-width: 0; /* Remove min-width for better responsiveness */
+    }
+
+    .form-image img {
+        display: none; /* Hide image on tablet and mobile devices */
+    }
+
+    #container {
+        justify-content: center;
+    }
+}
+
+/* Mobile devices (480px or less) */
+@media (max-width: 480px) {
+    body {
+        flex-direction: column;
+    }
+
+    #container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .form-image img {
+        display: none; /* Hide image on mobile */
+    }
+
+    #login-form {
+        padding: 50px;
+        width: 90%;
+    }
+
+    #login-form input {
+        max-width: 100%; /* Make inputs stretch to the full width */
+    }
+}
+  
+
+   #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the video covers the entire screen */
+      z-index: -1; /* Make sure it's behind other elements */
+      opacity: 1; /* Set opacity to 50% */
+    }
+    </style>
+    
+</head>
+<body>
+    <video id="bg-video" autoplay muted loop>
+        <source src="videoplayback (1).webm" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="container">
+        <form id="login-form" onsubmit="return validateForm(event)">
+            <!-- red alert for form error  -->
+            <div id="alert-red" style="display: none;">
+                <p id="error_message">Wrong ID or Password</p>
+            </div>
+            <!-- green alert for form error  -->
+            <div id="alert-green" style="display: none;">
+                <p id="succes_message">Successfully logged in!</p>
+            </div>
+            <h2>Sparrow link</h2>
+            <p>Enter your details to login</p>
+            <!-- email input -->
+            <input type="text" name="email" id="email" placeholder="Enter Username">
+            <!-- password input -->
+            <input type="password" name="password" id="password" placeholder="Password">
+            <!-- suggestion field -->
+            <div class="suggestion-line">
+                <!-- Any suggestion text or links can go here -->
+            </div>
+            <button type="submit">Sign in</button>
+        </form>
+        <div class="form-image">
+            <img src="your-image.png" alt="3D-person" width="450">
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to validate form
+        function validateForm(event) {
+            event.preventDefault();  // Prevent the form from submitting (to handle manually)
+            
+            const username = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const correctUsername = 'Scorpions';
+            const correctPassword = 'arjun@ctw';
+            const currentPage = window.location.pathname.split('/').pop();
+            
+            // Get the alert elements
+            const alertRed = document.getElementById('alert-red');
+            const alertGreen = document.getElementById('alert-green');
+            
+            // Get the failed attempts count from localStorage or initialize it if it doesn't exist
+            let failedAttempts = parseInt(localStorage.getItem('failedAttempts')) || 0;
+
+              // Store username and current page in localStorage for tracking
+        localStorage.setItem('currentPage', currentPage);
+        localStorage.setItem('lastAttemptedUser', username);
+    
+            // Reset alerts
+            alertRed.style.display = 'none';
+            alertGreen.style.display = 'none';
+    
+            // Check if the user has exceeded the allowed failed attempts
+            if (failedAttempts >= 3) {
+                // Redirect to "blocked.html" page if more than 3 failed attempts
+                window.location.href = "security.html";
+                return;
+            }
+    
+            // Check if username and password match the correct values
+            if (username === correctUsername && password === correctPassword) {
+                // Show success message
+                alertGreen.style.display = 'flex';
+                
+                // Reset failed attempts on successful login
+                localStorage.setItem('failedAttempts', 0);
+    
+                // Redirect to a new page
+                setTimeout(function() {
+                    window.location.href = "chatbox.html";
+                }, 1000);
+            } else {
+                // Show error message
+                alertRed.style.display = 'flex';
+    
+                // Increment failed attempts and store in localStorage
+                failedAttempts++;
+                localStorage.setItem('failedAttempts', failedAttempts);
+            }
+        }
+    </script>
+    
+    
+
+</body>
+</html>

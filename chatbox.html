@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparrow link</title>
+    <style>
+
+            /* Full screen video styling to cover the background */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the video covers the entire screen */
+      z-index: -1; /* Make sure it's behind other elements */
+      opacity: 0.5; /* Set opacity to 50% */
+    }
+
+    /* Header containing logo and text */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    /* Logo styling */
+    .logo {
+      width: 100px; /* Adjust size of the logo */
+      height: auto;
+    }
+
+    /* Title text styling */
+    .title {
+      background: rgba(0, 0, 0, 1);
+      font-size: 40px;
+      font-weight: bold;
+      color: white; /* White text color */
+      text-align: center;
+      flex-grow: 1; /* Ensures the title takes up the remaining space */
+      border: 2px solid green; /* Green border */
+      padding: 5px 10px; /* Optional: Add some padding around the text */
+      border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    }
+  
+/* Profile section styling (top-right corner) */
+.profile-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(49, 246, 0, 0.6);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* Profile picture styling */
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Profile text styling */
+.profile-text {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+/* Dropdown menu styling */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 10px;
+  width: 200px;
+  padding: 15px;
+  text-align: center;
+  z-index: 30;
+  display: flex; /* Add flexbox */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center the content horizontally */
+}
+
+/* Dropdown header */
+.dropdown-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Dropdown profile picture (increased size) */
+.dropdown-profile-pic {
+  width: 80px; /* Increased size */
+  height: 80px; /* Increased size */
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Dropdown text */
+.dropdown-profile-text {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Logout button - centered within the dropdown */
+.logout-btn {
+  padding: 12px 24px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Make the button span the full width */
+  margin-top: 10px; /* Optional margin to add space between text and button */
+  text-align: center; /* Ensure text is centered */
+}
+
+/* Hover effect for logout button */
+.logout-btn:hover {
+  background-color: #e53935;
+}
+
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+      <!-- Video background -->
+  <video id="bg-video" autoplay muted loop>
+    <source src="your-video-file.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <!-- Header containing logo and text -->
+  <div class="header">
+    <!-- Left logo -->
+    <img src="logo.jpg" class="logo" alt="Sparrow Logo">
+
+    <!-- Centered title text -->
+    <span class="title">SPARROW LINK</span>
+
+    <!-- Right logo (optional) -->
+    <img src="logo.jpg" class="logo" alt="Sparrow Logo">
+  </div>
+   <!-- Profile section in the top-right corner -->
+<div class="profile-container">
+  <div class="profile-info" id="profile-info">
+    <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
+    <span class="profile-text">ESP 1</span>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu">
+    <div class="dropdown-header">
+      <img src="profile.jpg" alt="Profile Picture" class="dropdown-profile-pic">
+      <span class="dropdown-profile-text">ESP 1</span>
+    </div>
+    <button class="logout-btn" id="logout-btn">Logout</button>
+  </div>
+</div>
+    
+    <div class="chat-container">
+        <h2>Sparrow Link</h2>
+        <div id="chat-box"></div>
+        <input type="text" id="username" placeholder="Enter your name">
+        <div class="input-container">
+            <input type="text" id="message" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+            <button onclick="shareLocation()">📍 Share Location</button>
+           
+<div class="image-upload">
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="sendImage()">Send Image</button>
+</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+<script>
+
+  // Toggle the visibility of the dropdown menu when the profile is clicked
+document.getElementById('profile-info').addEventListener('click', function() {
+  const dropdownMenu = document.getElementById('dropdown-menu');
+  dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+// Redirect to index.html when the logout button is clicked
+document.getElementById('logout-btn').addEventListener('click', function() {
+  window.location.href = 'index.html';  // Redirect to index.html on logout
+});
+
+document.getElementById("message").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+
+// Close the dropdown menu if clicked outside of it
+window.addEventListener('click', function(event) {
+  const dropdownMenu = document.getElementById('dropdown-menu');
+  const profileContainer = document.getElementById('profile-info');
+  if (!profileContainer.contains(event.target)) {
+    dropdownMenu.style.display = 'none';
+  }
+});
+</script>
+  </body>
+
+</html>
